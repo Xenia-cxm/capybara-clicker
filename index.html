@@ -6,6 +6,17 @@
     <title>Capybara Clicker - Addictive Animal Clicking Game | MuXiYouLe</title>
     <meta name="description" content="Play Capybara Clicker, the adorable and addictive clicking game featuring the internet's favorite animal. Click, upgrade, and watch your capybara empire grow!">
     <link rel="canonical" href="https://muxiyoule.online/capybara-clicker">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6WWJ58DN3C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6WWJ58DN3C');
+    </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,8 +42,17 @@
         </header>
 
         <!-- 游戏区域 -->
-        <div class="w-full aspect-[16/9] bg-white rounded-2xl shadow-lg overflow-hidden mb-12">
-            <iframe src="https://www.crazygames.com/embed/capybara-clicker" style="width: 100%; height: 100%;" frameborder="0" allow="gamepad *;" title="Capybara Clicker Game"></iframe>
+        <div class="w-full aspect-[16/9] bg-white rounded-2xl shadow-lg overflow-hidden mb-12" id="game-container">
+            <iframe 
+                src="https://www.crazygames.com/embed/capybara-clicker" 
+                style="width: 100%; height: 100%;" 
+                frameborder="0" 
+                allow="autoplay; fullscreen *; gamepad *; keyboard *; pointer-lock *;" 
+                allowfullscreen
+                title="Capybara Clicker Game"
+                id="game-iframe"
+                loading="lazy">
+            </iframe>
         </div>
 
         <!-- 游戏信息区域 -->
@@ -81,36 +101,36 @@
         <footer class="mt-12 text-center text-gray-600 text-sm">
             <p>&copy; 2024 MuXiYouLe.online - All rights reserved</p>
         </footer>
-    </div>
 
-    <!-- 页脚之后的脚本部分 -->
-    <script src="https://sdk.crazygames.com/crazygames-sdk-v2.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 确保DOM完全加载
-            if (window.CrazyGames && typeof window.CrazyGames.load === 'function') {
-                window.CrazyGames.load({
-                    container: document.getElementById('game-container'),
-                    gameId: "capybara-clicker",
-                    options: {
-                        width: '100%',
-                        height: '100%'
+        <!-- 页脚之后的脚本部分 -->
+        <script>
+            // 检测iframe是否加载失败
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    var iframe = document.getElementById('game-iframe');
+                    var container = document.getElementById('game-container');
+                    
+                    // 检查iframe是否能正常访问内容
+                    try {
+                        // 尝试访问iframe
+                        if (iframe.contentWindow.document) {
+                            console.log('iframe loaded successfully');
+                        }
+                    } catch (e) {
+                        console.log('iframe loading failed, showing fallback');
+                        container.innerHTML = `
+                            <div class="flex flex-col items-center justify-center h-full p-4">
+                                <p class="mb-4 text-lg">游戏加载失败，请直接访问游戏页面：</p>
+                                <a href="https://www.crazygames.com/game/capybara-clicker" target="_blank" 
+                                   class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                                    在CrazyGames上玩
+                                </a>
+                            </div>
+                        `;
                     }
-                });
-            } else {
-                // 如果SDK无法加载，显示备用方案
-                const container = document.getElementById('game-container');
-                container.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full p-4">
-                        <p class="mb-4 text-lg">游戏加载失败，请直接访问游戏页面：</p>
-                        <a href="https://www.crazygames.com/game/capybara-clicker" target="_blank" 
-                           class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
-                            在CrazyGames上玩
-                        </a>
-                    </div>
-                `;
-            }
-        });
-    </script>
+                }, 3000); // 给予3秒加载时间
+            });
+        </script>
+    </div>
 </body>
 </html> 
