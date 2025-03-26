@@ -20,117 +20,214 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        :root {
+            --game-primary: #FF6B6B;
+            --game-secondary: #4ECDC4;
+            --game-accent: #FFE66D;
+            --game-dark: #2C3E50;
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f5f7;
+            font-family: 'Rubik', sans-serif;
+            background-color: #1a1a2e;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.2) 2%, transparent 0%),
+                radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.2) 2%, transparent 0%);
+            background-size: 100px 100px;
+            color: #fff;
+        }
+        
+        .game-title {
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 4px 4px 0px var(--game-primary),
+                         8px 8px 0px var(--game-dark);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--game-primary);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.2);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .neon-border {
+            position: relative;
+        }
+        
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--game-primary), var(--game-secondary));
+            border-radius: inherit;
+            z-index: -1;
+            animation: borderGlow 3s linear infinite;
+        }
+        
+        @keyframes borderGlow {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .feature-icon {
+            font-size: 1.5em;
+            color: var(--game-accent);
+            text-shadow: 0 0 10px var(--game-accent);
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen">
     <div class="max-w-6xl mx-auto px-4 py-8">
         <!-- 主标题区域 -->
-        <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                Capybara Clicker: The Ultimate Clicking Adventure
+        <header class="text-center mb-12">
+            <h1 class="game-title text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-white">
+                Capybara Clicker
+                <span class="block text-xl md:text-2xl mt-4 text-game-accent">The Ultimate Clicking Adventure</span>
             </h1>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Embark on an epic journey with the world's most lovable rodent in this addictive clicking game!
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                🎮 Embark on an epic journey with the world's most lovable rodent in this addictive clicking game! 🎮
             </p>
         </header>
 
         <!-- 游戏区域 -->
-        <div class="w-full aspect-[16/9] bg-white rounded-2xl shadow-lg overflow-hidden mb-12" id="game-container">
-            <iframe 
-                src="https://www.crazygames.com/embed/capybara-clicker" 
-                style="width: 100%; height: 100%;" 
-                frameborder="0" 
-                allow="autoplay; fullscreen *; gamepad *; keyboard *; pointer-lock *;" 
-                allowfullscreen
-                title="Capybara Clicker Game"
-                id="game-iframe"
-                loading="lazy">
-            </iframe>
+        <div class="neon-border rounded-2xl mb-12 overflow-hidden">
+            <div class="w-full aspect-[16/9] bg-opacity-50 overflow-hidden" id="game-container">
+                <iframe 
+                    src="https://www.crazygames.com/embed/capybara-clicker" 
+                    style="width: 100%; height: 100%;" 
+                    frameborder="0" 
+                    allow="autoplay; fullscreen *; gamepad *; keyboard *; pointer-lock *;" 
+                    allowfullscreen
+                    title="Capybara Clicker Game"
+                    id="game-iframe"
+                    loading="lazy">
+                </iframe>
+            </div>
         </div>
 
         <!-- 游戏信息区域 -->
-        <div class="grid md:grid-cols-2 gap-8">
-            <section class="bg-white p-6 rounded-2xl shadow-md">
-                <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <section class="game-card rounded-2xl p-6">
+                <h2 class="text-2xl font-bold text-game-accent mb-6 flex items-center">
+                    <span class="feature-icon mr-3">🎮</span>
                     Game Features
                 </h2>
-                <ul class="space-y-3 text-gray-700">
-                    <li>🎮 Simple one-click gameplay mechanics</li>
-                    <li>🌟 Multiple upgrades and achievements</li>
-                    <li>🎨 Adorable capybara animations</li>
-                    <li>📱 Play on any device</li>
+                <ul class="space-y-4">
+                    <li class="flex items-center text-gray-300">
+                        <span class="text-game-primary mr-3">►</span>
+                        Simple one-click gameplay mechanics
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <span class="text-game-primary mr-3">►</span>
+                        Multiple upgrades and achievements
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <span class="text-game-primary mr-3">►</span>
+                        Adorable capybara animations
+                    </li>
+                    <li class="flex items-center text-gray-300">
+                        <span class="text-game-primary mr-3">►</span>
+                        Play on any device
+                    </li>
                 </ul>
             </section>
 
-            <section class="bg-white p-6 rounded-2xl shadow-md">
-                <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+            <section class="game-card rounded-2xl p-6">
+                <h2 class="text-2xl font-bold text-game-accent mb-6 flex items-center">
+                    <span class="feature-icon mr-3">📖</span>
                     How to Play
                 </h2>
-                <div class="text-gray-700 space-y-3">
-                    <p>Click on the capybara to earn points</p>
-                    <p>Unlock new upgrades to increase your earnings</p>
-                    <p>Collect special items and power-ups</p>
-                    <p>Compete with friends for the highest score</p>
+                <div class="space-y-4">
+                    <p class="flex items-center text-gray-300">
+                        <span class="text-game-secondary mr-3">01</span>
+                        Click on the capybara to earn points
+                    </p>
+                    <p class="flex items-center text-gray-300">
+                        <span class="text-game-secondary mr-3">02</span>
+                        Unlock new upgrades to increase your earnings
+                    </p>
+                    <p class="flex items-center text-gray-300">
+                        <span class="text-game-secondary mr-3">03</span>
+                        Collect special items and power-ups
+                    </p>
+                    <p class="flex items-center text-gray-300">
+                        <span class="text-game-secondary mr-3">04</span>
+                        Compete with friends for the highest score
+                    </p>
                 </div>
             </section>
         </div>
 
         <!-- 游戏描述 -->
-        <section class="mt-12 bg-white p-8 rounded-2xl shadow-md">
-            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+        <section class="game-card rounded-2xl p-8 mb-12">
+            <h2 class="text-2xl font-bold text-game-accent mb-6 flex items-center">
+                <span class="feature-icon mr-3">🎯</span>
                 About Capybara Clicker
             </h2>
-            <div class="text-gray-700 space-y-4">
-                <p>
+            <div class="space-y-4 text-gray-300">
+                <p class="leading-relaxed">
                     Capybara Clicker is an engaging incremental game that puts you in charge of your own capybara empire. Starting with a single click, you'll build your way up to a thriving community of these adorable creatures.
                 </p>
-                <p>
+                <p class="leading-relaxed">
                     With its charming graphics and satisfying progression system, Capybara Clicker offers endless entertainment for players of all ages. Each click brings new surprises and achievements, making it impossible to put down!
                 </p>
             </div>
         </section>
 
         <!-- 页脚 -->
-        <footer class="mt-12 text-center text-gray-600 text-sm">
-            <p>&copy; 2024 MuXiYouLe.online - All rights reserved</p>
+        <footer class="text-center text-gray-500 text-sm mt-12">
+            <p class="animate-pulse">🎮 © 2024 MuXiYouLe.online - All rights reserved 🎮</p>
         </footer>
-
-        <!-- 页脚之后的脚本部分 -->
-        <script>
-            // 检测iframe是否加载失败
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    var iframe = document.getElementById('game-iframe');
-                    var container = document.getElementById('game-container');
-                    
-                    // 检查iframe是否能正常访问内容
-                    try {
-                        // 尝试访问iframe
-                        if (iframe.contentWindow.document) {
-                            console.log('iframe loaded successfully');
-                        }
-                    } catch (e) {
-                        console.log('iframe loading failed, showing fallback');
-                        container.innerHTML = `
-                            <div class="flex flex-col items-center justify-center h-full p-4">
-                                <p class="mb-4 text-lg">游戏加载失败，请直接访问游戏页面：</p>
-                                <a href="https://www.crazygames.com/game/capybara-clicker" target="_blank" 
-                                   class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
-                                    在CrazyGames上玩
-                                </a>
-                            </div>
-                        `;
-                    }
-                }, 3000); // 给予3秒加载时间
-            });
-        </script>
     </div>
+
+    <!-- 页脚之后的脚本部分 -->
+    <script>
+        // 检测iframe是否加载失败
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var iframe = document.getElementById('game-iframe');
+                var container = document.getElementById('game-container');
+                
+                // 检查iframe是否能正常访问内容
+                try {
+                    // 尝试访问iframe
+                    if (iframe.contentWindow.document) {
+                        console.log('iframe loaded successfully');
+                    }
+                } catch (e) {
+                    console.log('iframe loading failed, showing fallback');
+                    container.innerHTML = `
+                        <div class="flex flex-col items-center justify-center h-full p-4">
+                            <p class="mb-4 text-lg">游戏加载失败，请直接访问游戏页面：</p>
+                            <a href="https://www.crazygames.com/game/capybara-clicker" target="_blank" 
+                               class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                                在CrazyGames上玩
+                            </a>
+                        </div>
+                    `;
+                }
+            }, 3000); // 给予3秒加载时间
+        });
+    </script>
 </body>
 </html> 
